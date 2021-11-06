@@ -11,9 +11,9 @@
 # Parameters
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$true)
+    [Parameter(Mandatory=$true)]
     [string]$Username
-    [Parameter(Mandatory=$true)
+    [Parameter(Mandatory=$true)]
     [string]$Password
     [string]$Tools = -join($env:USERPROFILE,"\","Desktop\Tools"),
     [string]$Downloads = -join($env:USERPROFILE,"\","Downloads"),
