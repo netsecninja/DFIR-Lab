@@ -12,9 +12,9 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
-    [string]$Username
+    [string]$Username,
     [Parameter(Mandatory=$true)]
-    [string]$Password
+    [string]$Password,
     [string]$Tools = -join($env:USERPROFILE,"\","Desktop\Tools"),
     [string]$Downloads = -join($env:USERPROFILE,"\","Downloads"),
     [string]$OOShutup_URL = "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
