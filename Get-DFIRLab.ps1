@@ -13,6 +13,7 @@ param(
     [string]$Tools = -join($env:USERPROFILE,"\","Desktop\Tools"),
     [string]$Downloads = -join($env:USERPROFILE,"\","Downloads"),
     [string]$OOShutup_URL = "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
+    [string]$OOShutupConfig_URL = "https://raw.githubusercontent.com/netsecninja/DFIR-Lab/main/ooshutup10.cfg",
     [string]$Chocolatey_URL = "https://community.chocolatey.org/install.ps1",
     [string]$EZTools_URL = "https://f001.backblazeb2.com/file/EricZimmermanTools/Get-ZimmermanTools.zip",
     [string]$KAPE_URL = "https://s3.amazonaws.com/cyb-us-prd-kape/kape.zip",
@@ -45,11 +46,12 @@ new-item $Tools -ItemType "directory" -ErrorAction SilentlyContinue
 # Install software and tools
 write-output "*** Installing O&OShutUp ***"
 Invoke-WebRequest -Uri $OOShutup_URL -OutFile $Downloads\OOSU10.exe
-.\$Downloads\OOSU10.exe ooshutup10.cfg /quiet
+Invoke-WebRequest -Uri $OOShutupConfig_URL -OutFile $Downloads\ooshutup10.cfg
+start-process $Downloads\OOSU10.exe -argumentlist "$Downloads\ooshutup10.cfg /quiet" -wait
 
 write-output "*** Installing Chocolatey ***"
 Invoke-WebRequest -Uri $Chocolatey_URL -OutFile $Downloads\install.ps1
-.\$Downloads\install.ps1
+start-process $Downloads\install.ps1 -wait
 
 write-output "*** Installing Firefox ***"
 choco install firefox -y
@@ -72,7 +74,7 @@ write-output "*** Installing Sysinternals ***"
 choco install sysinternals --params "/InstallDir:$Tools\Sysinternals" -y
 
 write-output "*** Enabling Autologon ***"
-.\$Tools\Sysinternals\autologon.exe $env:Username . $Password
+start-process $Tools\Sysinternals\autologon.exe -argumentlist "$env:Username . $Password" -wait
 
 write-output "*** Installing EZ Tools ***"
 Invoke-WebRequest -Uri $EZTools_URL -OutFile $Downloads\Get-ZimmermanTools.zip
