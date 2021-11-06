@@ -10,8 +10,6 @@
 
 # Parameters
 param(
-    [Parameter(Mandatory=$true)]
-    [string]$Password,
     [string]$Tools = -join($env:USERPROFILE,"\","Desktop\Tools"),
     [string]$Downloads = -join($env:USERPROFILE,"\","Downloads"),
     [string]$OOShutup_URL = "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe",
@@ -35,6 +33,7 @@ param(
 
 # Main
 write-output "*** Building DFIR lab ***"
+$Password = read-host "Enter the password for $env:username"
 
 # Configure Windows
 Write-Output "*** Setting Time Zone ***"
