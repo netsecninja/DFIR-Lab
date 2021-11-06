@@ -9,7 +9,6 @@
 
 
 # Parameters
-[CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
     [string]$Username,
@@ -47,7 +46,7 @@ write-output "*** Creating $Tools directory ***"
 new-item $Tools -ItemType "directory" -ErrorAction SilentlyContinue
 
 # Install software and tools
-write-output "*** Installing "O&OShutUp" ***"
+write-output "*** Installing O&OShutUp ***"
 Invoke-WebRequest -Uri $OOShutup_URL -OutFile $Downloads\OOSU10.exe
 .\$Downloads\OOSU10.exe ooshutup10.cfg /quiet
 
