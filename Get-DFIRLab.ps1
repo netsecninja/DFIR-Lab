@@ -43,15 +43,17 @@ set-timezone "Mountain Standard Time"
 write-output "*** Creating $Tools directory ***"
 new-item $Tools -ItemType "directory" -ErrorAction SilentlyContinue
 
+set-location $Downloads
+
 # Install software and tools
 write-output "*** Installing O&OShutUp ***"
-Invoke-WebRequest -Uri $OOShutup_URL -OutFile $Downloads\OOSU10.exe
-Invoke-WebRequest -Uri $OOShutupConfig_URL -OutFile $Downloads\ooshutup10.cfg
-start-process $Downloads\OOSU10.exe -argumentlist "$Downloads\ooshutup10.cfg /quiet" -wait
+Invoke-WebRequest -Uri $OOShutup_URL -OutFile OOSU10.exe
+Invoke-WebRequest -Uri $OOShutupConfig_URL -OutFile ooshutup10.cfg
+start-process .\OOSU10.exe -argumentlist "ooshutup10.cfg /quiet" -wait
 
 write-output "*** Installing Chocolatey ***"
-Invoke-WebRequest -Uri $Chocolatey_URL -OutFile $Downloads\install.ps1
-start-process $Downloads\install.ps1 -wait
+Invoke-WebRequest -Uri $Chocolatey_URL -OutFile install.ps1
+.\install.ps1
 
 write-output "*** Installing Firefox ***"
 choco install firefox -y
@@ -77,31 +79,31 @@ write-output "*** Enabling Autologon ***"
 start-process $Tools\Sysinternals\autologon.exe -argumentlist "$env:Username . $Password" -wait
 
 write-output "*** Installing EZ Tools ***"
-Invoke-WebRequest -Uri $EZTools_URL -OutFile $Downloads\Get-ZimmermanTools.zip
-expand-archive -force $Downloads\Get-ZimmermanTools.zip "$Tools\EZ Tools"
+Invoke-WebRequest -Uri $EZTools_URL -OutFile Get-ZimmermanTools.zip
+expand-archive -force Get-ZimmermanTools.zip "$Tools\EZ Tools"
 Set-Location "$Tools\EZ Tools"
 .\Get-ZimmermanTools.ps1
-Set-Location $PSScriptRoot
+Set-Location $Downloads
 
 write-output "*** Installing KAPE ***"
-Invoke-WebRequest -Uri $KAPE_URL -OutFile $Downloads\kape.zip
-expand-archive -force $Downloads\kape.zip "$Tools"
+Invoke-WebRequest -Uri $KAPE_URL -OutFile kape.zip
+expand-archive -force kape.zip "$Tools"
 Set-Location "$Tools\KAPE"
 .\kape.exe --msource C:\ --mdest C:\ --module !!ToolSync
-Set-Location $PSScriptRoot
-Invoke-WebRequest -Uri $RegRipper_URL -OutFile $Downloads\regripper.zip
-expand-archive -force $Downloads\regripper.zip $Downloads
-Move-Item $Downloads\RegRipper3.0-master $Tools\KAPE\Modules\bin\regripper
-Invoke-WebRequest -Uri $TlnTools_URL -OutFile $Downloads\tlntools.zip
-expand-archive -force $Downloads\tlntools.zip $Downloads
-Move-Item $Downloads\Tools-master\exe $Tools\KAPE\Modules\bin\tln_tools
-Invoke-WebRequest -Uri $KAPETimelineTools_URL -OutFile $Downloads\kape_timeline.zip
-expand-archive -force $Downloads\kape_timeline.zip $Downloads
-Move-Item $Downloads\KAPE_Tools-master\executables\* $Tools\KAPE\Modules\bin\tln_tools
+Set-Location $Downloads
+Invoke-WebRequest -Uri $RegRipper_URL -OutFile regripper.zip
+expand-archive -force regripper.zip $Downloads
+Move-Item RegRipper3.0-master $Tools\KAPE\Modules\bin\regripper
+Invoke-WebRequest -Uri $TlnTools_URL -OutFile tlntools.zip
+expand-archive -force tlntools.zip $Downloads
+Move-Item Tools-master\exe $Tools\KAPE\Modules\bin\tln_tools
+Invoke-WebRequest -Uri $KAPETimelineTools_URL -OutFile kape_timeline.zip
+expand-archive -force kape_timeline.zip $Downloads
+Move-Item KAPE_Tools-master\executables\* $Tools\KAPE\Modules\bin\tln_tools
 
 write-output "*** Installing FTK Imager ***"
-Invoke-WebRequest -Uri $FTKImager_URL -OutFile $Downloads\ftkimager.exe
-Start-Process $Downloads\ftkimager.exe -argumentlist "/S /v/qn" -NoNewWindow -wait
+Invoke-WebRequest -Uri $FTKImager_URL -OutFile ftkimager.exe
+Start-Process ftkimager.exe -argumentlist "/S /v/qn" -wait
 move-item "c:\users\public\desktop\AccessData FTK Imager.lnk" $Tools
 
 write-output "*** Installing Autopsy ***"
@@ -131,7 +133,7 @@ read-host "Follow these steps:
 3. Click the + button above All Users
 4. Click OK, then close 7-Zip
 Press Enter to open 7-Zip"
-start-process "C:\Program Files\7-Zip\7zfm.exe"
+start-process "C:\Program Files\7-Zip\7zfm.exe" -wait
 read-host "Press Enter once the steps above are complete"
 
 write-output "*** Installing Arsenal Image Mounter ***"
@@ -161,8 +163,8 @@ start-process $Floss_URL
 read-host "Press Enter once the steps above are complete"
 
 write-output "*** Installing PE Detective ***"
-Invoke-WebRequest -Uri $PEDetective_URL -OutFile $Downloads\pedetective.zip
-expand-archive -force $Downloads\pedetective.zip "$Tools\PE Detective"
+Invoke-WebRequest -Uri $PEDetective_URL -OutFile pedetective.zip
+expand-archive -force pedetective.zip "$Tools\PE Detective"
 read-host "Follow these steps:
 1. Create a shortcut to PE Detective.exe in the $Tools folder.
 Press Enter once the step above is complete"
