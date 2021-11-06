@@ -11,8 +11,6 @@
 # Parameters
 param(
     [Parameter(Mandatory=$true)]
-    [string]$Username,
-    [Parameter(Mandatory=$true)]
     [string]$Password,
     [string]$Tools = -join($env:USERPROFILE,"\","Desktop\Tools"),
     [string]$Downloads = -join($env:USERPROFILE,"\","Downloads"),
@@ -75,7 +73,7 @@ write-output "*** Installing Sysinternals ***"
 choco install sysinternals --params "/InstallDir:$Tools\Sysinternals" -y
 
 write-output "*** Enabling Autologon ***"
-.\$Tools\Sysinternals\autologon.exe $Username . $Password
+.\$Tools\Sysinternals\autologon.exe $env:Username . $Password
 
 write-output "*** Installing EZ Tools ***"
 Invoke-WebRequest -Uri $EZTools_URL -OutFile $Downloads\Get-ZimmermanTools.zip
