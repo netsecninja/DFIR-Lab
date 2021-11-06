@@ -1,5 +1,5 @@
 <#
-. Synopsis
+.Synopsis
     Build a DFIR lab
 .DESCRIPTION
     Configures Windows and installs software used in a DFIR lab.
