@@ -43,8 +43,6 @@ set-timezone "Mountain Standard Time"
 write-output "*** Creating $Tools directory ***"
 new-item $Tools -ItemType "directory" -ErrorAction SilentlyContinue
 
-set-location $Downloads
-
 # Install software and tools
 write-output "*** Installing O&OShutUp ***"
 Invoke-WebRequest -Uri $OOShutup_URL -OutFile OOSU10.exe
@@ -67,10 +65,10 @@ choco install notepadplusplus -y
 write-output "*** Installing Python ***"
 # Python 3.9.7 or less required for oletools 0.60
 choco install python --version 3.9.7 -y
-python.exe -m pip install --upgrade pip
+C:\Python39\python.exe -m pip install --upgrade pip
 
 write-output "*** Installing oletools and pycryptodome ***"
-pip install oletools pycryptodome
+C:\Python39\python.exe -m pip install oletools pycryptodome
 
 write-output "*** Installing Sysinternals ***"
 choco install sysinternals --params "/InstallDir:$Tools\Sysinternals" -y
@@ -104,14 +102,14 @@ Move-Item KAPE_Tools-master\executables\* $Tools\KAPE\Modules\bin\tln_tools
 write-output "*** Installing FTK Imager ***"
 Invoke-WebRequest -Uri $FTKImager_URL -OutFile ftkimager.exe
 Start-Process ftkimager.exe -argumentlist "/S /v/qn" -wait
-move-item "c:\users\public\desktop\AccessData FTK Imager.lnk" $Tools
+move-item "c:\users\public\desktop\AccessData FTK Imager.lnk" "$Tools\FTK Imager.lnk"
 
 write-output "*** Installing Autopsy ***"
 choco install autopsy -y
-move-item "c:\users\public\desktop\Autopsy*.lnk" $Tools
+move-item "c:\users\public\desktop\Autopsy*.lnk" "$Tools\Autopsy.lnk"
 
 write-output "*** Installing Volatility ***"
-pip install volatility3
+C:\Python39\python.exe -m pip install volatility3
 Invoke-WebRequest -Uri $VolWin_URL -OutFile C:\Python39\Lib\site-packages\volatility3\symbols\windows.zip
 Invoke-WebRequest -Uri $VolMac_URL -OutFile C:\Python39\Lib\site-packages\volatility3\symbols\mac.zip
 Invoke-WebRequest -Uri $VolLin_URL -OutFile C:\Python39\Lib\site-packages\volatility3\symbols\linux.zip
