@@ -26,7 +26,7 @@ param(
     [string]$VolMac_URL = "https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip",
     [string]$VolLin_URL = "https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip",
     [string]$CyberChef_URL = "https://gchq.github.io/CyberChef",
-    [string]$Floss_URL = "https://github.com/mandiant/flare-floss/releases/tag/v1.7.0",
+    [string]$Floss_URL = "https://github.com/mandiant/flare-floss/releases/latest",
     [string]$PEDetective_URL = "https://ntcore.com/files/PE_Detective.zip",
     [string]$PEbear_URL = "https://github.com/hasherezade/pe-bear-releases/releases/latest"
     )
